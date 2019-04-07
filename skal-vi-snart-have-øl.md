@@ -5,7 +5,7 @@ Actually solved this challenge without going down any rabbitholes, mostly due to
 Started off by identifying the OS version with `volatility -f raretowin.raw imageinfo` and as such got `Win7SP1x64` as result.
 
 Next step was to look for suspicious or malicious proccesses 'volatility -f raretowin.raw --profile Win7SP1x64 pstree > pstree'.
-'''
+```
 Name                                                  Pid   PPid   Thds   Hnds Time
 -------------------------------------------------- ------ ------ ------ ------ ----
  0xfffffa8002414290:explorer.exe                     1448   1420     33    931 2019-03-23 20:42:39 UTC+0000
@@ -28,12 +28,12 @@ Name                                                  Pid   PPid   Thds   Hnds T
  0xfffffa80006a3670:wininit.exe                       388    332      3     74 2019-03-23 20:42:36 UTC+0000
 . 0xfffffa8002046b30:services.exe                     484    388      9    188 2019-03-23 20:42:36 UTC+0000
 ...
-'''
+```
 
 Nothing seemed suspicious, but this did tell me that the user used Chrome and not IE or firefox (!) as browser.
 
-Thus i loaded up superponible plugins to search for chromehistory 'volatility --plugins=../volatility-plugins/ chromehistory -f raretowin.raw --profile Win7SP1x64 > chromehistory'
-'''
+Thus i loaded up superponible plugins to search for chromehistory `volatility --plugins=../volatility-plugins/ chromehistory -f raretowin.raw --profile Win7SP1x64 > chromehistory`
+```
 Index  URL                                                                              Title                                                                            Visits Typed Last Visit Time            Hidden Favicon ID
 ------ -------------------------------------------------------------------------------- -------------------------------------------------------------------------------- ------ ----- -------------------------- ------ ----------
      5 https://www.google.com/search?ei=E5uWXJ.......1..gws-wiz.......33i10.1d1MmLHudn8 music macklemore & ryan lewis download - بحث Google‏                             1     0 2019-03-23 20:46:19.759382        N/A       
@@ -46,11 +46,11 @@ Index  URL                                                                      
      7 https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file                    music                                                                                 3     0 2019-03-23 20:46:41.978975        N/A       
      6 https://www.google.tn/_/chrome/newtab?ie=UTF-8                                                                                                                         1     1 2019-03-23 20:46:27.270709        N/A       
      1 http://www.google.com/                                                           Google                                                                                1     0 2019-03-23 20:45:46.371044        N/A    
- '''
+ ```
 This revealed only a handful of searches, including some suspicious ones, namely the one from mediafire. I downloaded the rar file in my VM, and immediately saw that this was not a zip.
 
-Using 'strings' on the file i noticed an ELF file within the file, and a suspicious directory within this ELF 'C:\\Users\Public\Data\firefox.exe'
+Using `strings` on the file i noticed an ELF file within the file, and a suspicious directory within this ELF `C:\\Users\Public\Data\firefox.exe`
 
 __Flag__
-Converting the path to 'C:\\Users\\Public\\Data\\firefox.exe' and taking the MD5 sum of it gives us the flag.
+Converting the path to `C:\\Users\\Public\\Data\\firefox.exe` and taking the MD5 sum of it gives us the flag.
 Securinets{9c2623856856ce8aa830a5feb0e4910d}
