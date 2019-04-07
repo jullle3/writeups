@@ -2,7 +2,7 @@
 
 Actually solved this challenge without going down any rabbitholes, mostly due to the fact of my very handy volatility cheatsheet (find it in the cheatsheet folder)
 
-Started off by identifying the OS version with 'volatility -f raretowin.raw imageinfo' and as such got 'Win7SP1x64' as result.
+Started off by identifying the OS version with `volatility -f raretowin.raw imageinfo` and as such got `Win7SP1x64` as result.
 
 Next step was to look for suspicious or malicious proccesses 'volatility -f raretowin.raw --profile Win7SP1x64 pstree > pstree'.
 '''
